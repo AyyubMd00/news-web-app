@@ -20,7 +20,6 @@ def get_full_story(url, category, country, language):
         "link": url,
         "category": category,
         "country": country,
-        "language": language
         }
 
     title_element = driver.find_element(By.CLASS_NAME,'heading-part')
@@ -48,10 +47,10 @@ def get_full_story(url, category, country, language):
     except:
         story['author'] = ''
     updated_timestamp = author_element.find_element(By.TAG_NAME, 'span').text
-    if 'Updated: ' in updated_timestamp:
-        story['updated_timestamp'] = get_iso_datetime(updated_timestamp[9:], "%B %d, %Y %H:%M IST") # To remove Updated: 
-    else:
-        story['updated_timestamp'] = get_iso_datetime(updated_timestamp, "%B %d, %Y %H:%M IST")
+    # if 'Updated: ' in updated_timestamp:
+    #     story['updated_timestamp'] = get_iso_datetime(updated_timestamp[9:], "%B %d, %Y %H:%M IST") # To remove Updated: 
+    # else:
+    #     story['updated_timestamp'] = get_iso_datetime(updated_timestamp, "%B %d, %Y %H:%M IST")
     try: # Search for the city
         story['city_name'] = author_element.find_element(By.TAG_NAME,'br').text
     except:
@@ -64,13 +63,13 @@ def get_full_story(url, category, country, language):
     except:
         story['image_url'] = ''
     try: # If content is missing, don't carry on with this story
-        story['content'] = ""
+        story['content'] = []
         count = 1
         for para_element in content_element.find_elements(By.TAG_NAME, 'p'):
-            story['content'] += para_element.text + "\n"
+            story['content'].append(para_element.text)
             # print(para_element.text, count)
             count += 1
-        story['content'] = story['content'][:-2]
+        # story['content'] = story['content'][:-2] #This line was used when content was of type string to remove last '\n'.
     except:
         return {}
     first_publish_element = driver.find_element(By.CLASS_NAME,'ie-first-publish')
