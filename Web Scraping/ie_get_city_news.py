@@ -2,11 +2,12 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import StaleElementReferenceException
+import sys
 
+sys.path.append("Utils")
 from ie_get_full_story import get_full_story
 from db_utils import upload_story_in_db, is_story_present_in_db
-
-    
+from get_category import get_category    
 
 chrome_options = Options()
 # chrome_options.binary_location = 'selenium\chrome-win64\chrome.exe'
@@ -35,8 +36,10 @@ for city_news_element in nation_element.find_elements(By.CLASS_NAME,'articles'):
     if is_story_present_in_db(city_news_url)==True:
         continue
     print('News Count:',city_news_count)
-    city_story = get_full_story(city_news_url, "cities", "india", "english")
+    city_story = get_full_story(city_news_url)
+    print("Story: ", city_story)
     if city_story != {}:
+        city_story['category'] = get_category(city_story['title'], city_story['description'])
         upload_story_in_db(city_story)
 
 driver.quit()

@@ -2,10 +2,12 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from uuid import uuid4
+import sys
 
+sys.path.append("Utils")
 from utils import get_iso_datetime
 
-def get_full_story(url, category, country, language):
+def get_full_story(url):
     chrome_options = Options()
     # chrome_options.binary_location = 'selenium\chrome-win64\chrome.exe'
     chrome_options.add_argument('--disable-clound-management') # To Remove an error not related to selenium
@@ -18,18 +20,20 @@ def get_full_story(url, category, country, language):
         "article_id": str(uuid4()),
         "source_id": "indianexpress",
         "link": url,
-        "category": category,
-        "country": country,
+        "country": "India",
+        "language": "english"
         }
 
     title_element = driver.find_element(By.CLASS_NAME,'heading-part')
     try: # Return empty dictionary if it's a premium story
         title_element.find_element(By.CLASS_NAME,'ie-premium')
+        print("Premium story")
         return {}
     except:
         pass
     try: # Return empty dictionary if it's a live blog
         title_element.find_element(By.CLASS_NAME,'livegif')
+        print("Title Missing")
         return {}
     except:
         pass
@@ -71,11 +75,15 @@ def get_full_story(url, category, country, language):
             count += 1
         # story['content'] = story['content'][:-2] #This line was used when content was of type string to remove last '\n'.
     except:
+        print("Content Missing")
         return {}
     first_publish_element = driver.find_element(By.CLASS_NAME,'ie-first-publish')
     try: # If Published Timestamp is missing
-        story['published_timestamp'] = get_iso_datetime(first_publish_element.find_element(By.TAG_NAME,'span').text, "%B %d, %Y %H:%M IST")
+        published_time = first_publish_element.find_element(By.TAG_NAME,'span').text
+        print(published_time)
+        story['published_timestamp'] = get_iso_datetime(published_time, "%B %d, %Y %H:%M IST")
     except:
+        print("Published Timestamp Missing")
         return {}
     try: # If tag is missing
         tags_element = driver.find_element(By.CLASS_NAME,'storytags')

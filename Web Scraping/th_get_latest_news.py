@@ -2,11 +2,12 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import StaleElementReferenceException
+import sys
 
+sys.path.append("Utils")
 from th_get_full_story import get_full_story
 from db_utils import upload_story_in_db, is_story_present_in_db
-
-    
+from get_category import get_category
 
 chrome_options = Options()
 # chrome_options.binary_location = 'selenium\chrome-win64\chrome.exe'
@@ -35,4 +36,6 @@ for news_element in latest_news_element.find_elements(By.TAG_NAME, 'li'):
             continue
         story = get_full_story(link)
         print(story)
-        upload_story_in_db(story)
+        if story != {}:
+            story['category'] = get_category(story['title'], story['description'])
+            upload_story_in_db(story)
