@@ -9,3 +9,4 @@ geopy
 selenium
 joblib
 scikit-learn
+BeautifulSoup4

@@ -10,6 +10,13 @@ def upload_story_in_db(story):
     collection.insert_one(story)
     client.close()
 
+def upload_stories_in_db(stories):
+    client = MongoClient('mongodb+srv://AyyubMd00:ayyUB2000@cluster0.mozxcn1.mongodb.net/')
+    db = client['news_app']
+    collection = db['english_news']
+    collection.insert_many(stories)
+    client.close()
+
 def is_story_present_in_db(link):
     client = MongoClient('mongodb+srv://AyyubMd00:ayyUB2000@cluster0.mozxcn1.mongodb.net/')
     db = client['news_app']

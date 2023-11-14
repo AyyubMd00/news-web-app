@@ -38,21 +38,21 @@ def get_story(url):
         story['video_url'] = video_element.get('href')
     else:
         story['video_url'] = ''
-    story['title'] = title_element.find('h1').get_text()
-    story['description'] = title_element.find('h2').get_text()
+    story['title'] = title_element.find('h1').get_text().strip()
+    story['description'] = title_element.find('h2').get_text().strip()
 
     author_element = soup.find(class_='editor')
     if author_element.find('a') != None: # If author is missing
-        story['author'] = author_element.find('a').get_text()
+        story['author'] = author_element.find('a').get_text().strip()
     else:
         story['author'] = ''
-    # updated_timestamp = author_element.find('span').get_text()
+    # updated_timestamp = author_element.find('span').get_text().strip()
     # if 'Updated: ' in updated_timestamp:
     #     story['updated_timestamp'] = get_iso_datetime(updated_timestamp[9:], "%B %d, %Y %H:%M IST") # To remove Updated: 
     # else:
     #     story['updated_timestamp'] = get_iso_datetime(updated_timestamp, "%B %d, %Y %H:%M IST")
     if author_element.find('br') != None: # Search for the city
-        story['city_name'] = author_element.find('br').get_text()
+        story['city_name'] = author_element.find('br').get_text().strip()
     else:
         story['city_name'] = ''
 
@@ -68,7 +68,7 @@ def get_story(url):
         story['content'] = []
         count = 1
         for para_element in para_elements:
-            story['content'].append(para_element.get_text())
+            story['content'].append(para_element.get_text().strip())
             # print(para_element.text, count)
             count += 1
         # story['content'] = story['content'][:-2] #This line was used when content was of type string to remove last '\n'.
@@ -78,8 +78,8 @@ def get_story(url):
     first_publish_element = soup.find(class_='ie-first-publish')
     published_time_element = first_publish_element.find('span')
     if published_time_element != None: # If Published Timestamp is missing
-        published_time = published_time_element.get_text()
-        print(published_time)
+        published_time = published_time_element.get_text().strip()
+        print("Published Time:", published_time)
         story['published_timestamp'] = get_iso_datetime(published_time, "%B %d, %Y %H:%M IST")
     else:
         print("Published Timestamp Missing")
@@ -90,7 +90,7 @@ def get_story(url):
         for tag_element in tags_element.find('li'):
             if 'tags' in tag_element.text.lower():
                 continue
-            story['tags'].append(tag_element.get_text())
+            story['tags'].append(tag_element.get_text().strip())
     else:
         story['tags'] = []
     return story
