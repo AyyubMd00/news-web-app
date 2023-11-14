@@ -4,7 +4,7 @@ import requests
 
 from web_scraping.ie_get_story import get_story
 from utils.db_utils import upload_stories_in_db, is_story_present_in_db
-from utils.get_category import get_category
+from utils.get_category_bert import get_category
 
 def get_news():
     response = requests.get('https://indianexpress.com/section/cities/')
