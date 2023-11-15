@@ -4,7 +4,7 @@ import requests
 
 from web_scraping.ie_get_story import get_story
 from utils.db_utils import upload_stories_in_db, is_story_present_in_db
-from utils.get_category_bert import get_category
+# from utils.get_category_bert import get_category
 
 def get_news():
     response = requests.get('https://indianexpress.com/section/cities/')
@@ -27,8 +27,8 @@ def get_news():
         story = get_story(news_url)
         # print("Story: ", story)
         if story != {}:
-            story['category'] = get_category(story['title'], story['description'])
-            # story['category'] = ''
+            # story['category'] = get_category(story['title'], story['description'])
+            story['category'] = ''
             stories.append(story)
     if len(stories):
         upload_stories_in_db(stories)

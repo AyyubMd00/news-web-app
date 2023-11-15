@@ -19,7 +19,7 @@ def get_category(title, description):
     text = [title+" "+description]
     
     model = BertForSequenceClassification.from_pretrained('google/bert_uncased_L-4_H-512_A-8', num_labels=10) # change the model name and the number of labels according to your data
-    model.load_state_dict(torch.load('utils/category_predictor.pt', map_location=torch.device('cpu')))
+    model.load_state_dict(torch.load('C:\\Users\\Admin\\Desktop\\News Web App\\Functions\\utils\\category_predictor.pt', map_location=torch.device('cpu')))
     model.eval() # put the model in inference mode
 
     tokenizer = BertTokenizer.from_pretrained('google/bert_uncased_L-4_H-512_A-8', do_lower_case=True) # change the model name according to your data

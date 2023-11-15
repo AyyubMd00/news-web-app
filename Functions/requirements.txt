@@ -7,8 +7,10 @@ pymongo
 # tensorflow
 geopy
 # selenium
-joblib
+# joblib
 # scikit-learn
 BeautifulSoup4
-http://download.pytorch.org/whl/cpu/torch-2.1.0%2Bcpu-cp311-cp311-linux_x86_64.whl
-https://files.pythonhosted.org/packages/53/36/a6479f41d5b998cd1cd4b9e3f42d3da4ca93b448c7d10a65f27d9cbf6dca/transformers-4.35.0.tar.gz
+# http://download.pytorch.org/whl/cpu/torch-2.1.0%2Bcpu-cp311-cp311-linux_x86_64.whl
+# https://files.pythonhosted.org/packages/53/36/a6479f41d5b998cd1cd4b9e3f42d3da4ca93b448c7d10a65f27d9cbf6dca/transformers-4.35.0.tar.gz
+# torch
+# transformers

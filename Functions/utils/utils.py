@@ -22,5 +22,5 @@ def get_country(city):
         return location.split(", ")[-1]
     return ""
 
-print(get_country("pune"))
+# print(get_country("pune"))
 # print(get_iso_datetime("September 24, 2023 02:38 pm", "%B %d, %Y %I:%M %p"))
