@@ -12,8 +12,17 @@ def predict_category_prompt(title, description):
     encoded_prompt = parse.quote(prompt)
     # print(encoded_prompt)
     response = requests.get(url+encoded_prompt)
+    if response.status_code != 200:
+        print("Bad response:", response.status_code)
+        print(response.content)
+        return None
     category = response.content.decode()
+    if category.find(' ') == -1: # When only category is returned as one word response.
+        return category
     if category.find('*') != -1:
         category = category[category.find('*')+2:category.rfind('*')-1]
+    else:
+        print("Bad response:", category)
+        return None # When improper response is given.
     # print(category)
     return category

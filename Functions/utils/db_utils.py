@@ -22,8 +22,17 @@ def get_undefined_category_items():
     db = client['news_app']
     collection = db['english_news']
     query = {'category': ''}
-    items = collection.find(query)
+    items = collection.find(query).sort('created_timestamp', -1).limit(40)
     return items
+
+# def get_count_of_undefined_category():
+#     client = MongoClient('mongodb+srv://AyyubMd00:ayyUB2000@cluster0.mozxcn1.mongodb.net/')
+#     db = client['news_app']
+#     collection = db['english_news']
+#     query = {'category': ''}
+#     count = collection.count_documents(query)
+#     return count
+
 
 def update_category_in_db(item, category):
     client = MongoClient('mongodb+srv://AyyubMd00:ayyUB2000@cluster0.mozxcn1.mongodb.net/')

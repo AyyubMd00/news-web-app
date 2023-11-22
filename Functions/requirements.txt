@@ -7,3 +7,4 @@ requests
 pymongo
 geopy
 BeautifulSoup4
+# bardapi

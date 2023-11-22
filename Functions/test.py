@@ -10,13 +10,14 @@ from datetime import datetime
 # from web_scraping.th_get_latest_news import get_latest_news
 from utils.get_category_bert import get_category
 from utils.predict_category import predict_category
+from utils.freegpt_predict_category_prompt import predict_category_prompt
 
 start_time = datetime.now()
 print(start_time)
 title = "Man thrashed and sexually assaulted in Delhi; police arrest 2"
 description = "The incident took place on Diwali night when the complainant and the family of the accused were celebrating the festival."
+print(predict_category_prompt(title, description))
 print(get_category(title, description))
-predict_category()
 # get_news()
 # get_city_news()
 # print(get_story('https://www.thehindu.com/sport/cricket/captaincy-has-not-been-a-burden-for-me-babar-azam/article67522001.ece'))
@@ -26,4 +27,3 @@ predict_category()
 end_time = datetime.now()
 print(end_time)
 print(end_time - start_time)
-
