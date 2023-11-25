@@ -24,10 +24,10 @@ def get_news():
             link_element = news_element.find('a')
             link = link_element.get('href')
             title = link_element.get_text().strip()
-            if is_english_news(title) == False:
+            if is_english_news(title) == False or title == "":
                 continue
             if link_element.find(class_='picture') == None:
-                return
+                continue
             print(news_count, link)
             if is_story_present_in_db(link)==True:
                 continue
