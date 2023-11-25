@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 from uuid import uuid4
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from utils.utils import get_iso_datetime
 
@@ -21,7 +21,7 @@ def get_story(url, title):
         "link": url,
         "country": "India",
         "language": "english",
-        "created_timestamp": (datetime.now()).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+        "created_timestamp": (datetime.utcnow() + timedelta(hours=5, minutes=30)).strftime("%Y-%m-%dT%H:%M:%S.%fZ") #using utcnow instead now is because the azure function apps is set to utc timezone.
     }
 
     title_element = soup.find(class_='heading-part')

@@ -59,3 +59,9 @@ def is_story_present_in_db(link):
     if len(list(query_result)):
         return True
     return False
+
+def delete_stories(query):
+    client = MongoClient(mongodb_conn_string)
+    db = client['news_app']
+    collection = db['english_news']
+    collection.delete_many(query)

@@ -17,18 +17,22 @@ def get_news():
 
     news_count = 0
     stories = []
+
     for news_element in news_element.find_all('li'):
+        if news_count == 50:
+            break
+        # print(news_count)
         news_count += 1
         category = news_element.find_all('a')[1].text
         if category not in ['PREMIUM', 'SPONSORED CONTENT', 'NEWS']:
             link_element = news_element.find('a')
             link = link_element.get('href')
-            title = link_element.get_text().strip()
-            if is_english_news(title) == False or title == "":
+            title = news_element.find(class_='title').get_text().strip()
+            if title == None or title == "" or is_english_news(title) == False:
                 continue
             if link_element.find(class_='picture') == None:
                 continue
-            print(news_count, link)
+            # print(news_count, link, title)
             if is_story_present_in_db(link)==True:
                 continue
             story = get_story(link, title)
@@ -37,5 +41,6 @@ def get_news():
                 # story['category'] = get_category(story['title'], story['description'])
                 story['category'] = ''
                 stories.append(story)
+    print(len(stories))
     if len(stories):
         upload_stories_in_db(stories)

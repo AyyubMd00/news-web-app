@@ -3,7 +3,7 @@ from geopy.geocoders import Nominatim
 import langid
 
 def get_iso_datetime(datetime_obj, input_format):
-    print(datetime_obj)
+    # print(datetime_obj)
     # input_format = "%B %d, %Y %H:%M IST"
     output_format = "%Y-%m-%dT%H:%M:%S.%fZ"
     try:
