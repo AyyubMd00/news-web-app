@@ -5,7 +5,7 @@ from datetime import datetime
 
 from utils.utils import get_iso_datetime, get_country
 
-def get_story(url):
+def get_story(url, title):
     response = requests.get(url)
     if response.status_code != 200:
         return
@@ -15,6 +15,7 @@ def get_story(url):
     story = {
         "article_id": str(uuid4()),
         "source_id": "thehindu",
+        "title": title,
         "link": url,
         "language": "english",
         "video_url": "",
@@ -26,7 +27,7 @@ def get_story(url):
     title_element = article_element.find(class_= 'title')
     if title_element == None:
         return {}
-    story['title'] = title_element.get_text().strip()
+    # story['title'] = title_element.get_text().strip()
     description_element = article_element.find(class_= 'sub-title')
     if description_element != None:
         story['description'] = description_element.get_text().strip()

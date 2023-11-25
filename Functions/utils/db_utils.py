@@ -19,12 +19,20 @@ def upload_stories_in_db(stories):
     collection.insert_many(stories)
     client.close()
 
-def get_undefined_category_items():
+def get_undefined_category_items(limit):
     client = MongoClient(mongodb_conn_string)
     db = client['news_app']
     collection = db['english_news']
     query = {'category': ''}
-    items = collection.find(query).sort('created_timestamp', -1).limit(40)
+    items = collection.find(query).sort('created_timestamp', -1).limit(limit)
+    return items
+
+def get_wrong_category_items(limit):
+    client = MongoClient(mongodb_conn_string)
+    db = client['news_app']
+    collection = db['english_news']
+    query = {'created_timestamp': {'$lt': '2023-11-23T00:00:00.000Z'}}
+    items = collection.find(query).sort('created_timestamp', -1).limit(limit)
     return items
 
 # def get_count_of_undefined_category():

@@ -5,7 +5,7 @@ from datetime import datetime
 
 from utils.utils import get_iso_datetime
 
-def get_story(url):
+def get_story(url, title):
     response = requests.get(url)
     if response.status_code != 200:
         return
@@ -17,6 +17,7 @@ def get_story(url):
     story = {
         "article_id": str(uuid4()),
         "source_id": "indianexpress",
+        "title": title,
         "link": url,
         "country": "India",
         "language": "english",
@@ -31,14 +32,13 @@ def get_story(url):
         print("Premium story")
         return {}
     if title_element.find(class_='livegif') != None: # Return empty dictionary if it's a live blog
-        print("Title Missing")
+        print("Live blog")
         return {}
     video_element = soup.find(class_='ytp-impression-link')
     if video_element != None:
         story['video_url'] = video_element.get('href')
     else:
         story['video_url'] = ''
-    story['title'] = title_element.find('h1').get_text().strip()
     story['description'] = title_element.find('h2').get_text().strip()
 
     author_element = soup.find(class_='editor')

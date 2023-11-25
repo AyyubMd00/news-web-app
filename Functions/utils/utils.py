@@ -1,5 +1,6 @@
 from datetime import datetime
 from geopy.geocoders import Nominatim
+import langid
 
 def get_iso_datetime(datetime_obj, input_format):
     print(datetime_obj)
@@ -21,6 +22,10 @@ def get_country(city):
     if location:
         return location.split(", ")[-1]
     return ""
+
+def is_english_news(title):
+    lang,_ = langid.classify(title)
+    return lang == 'en'
 
 # print(get_country("pune"))
 # print(get_iso_datetime("September 24, 2023 02:38 pm", "%B %d, %Y %I:%M %p"))
