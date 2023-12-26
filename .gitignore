@@ -1,7 +1,3 @@
-# Azurite artifacts
+.vscode
 __blobstorage__
-__queuestorage__
-__azurite_db*__.json
-.python_packages
-.env
-
+__azurite_db*

@@ -4,7 +4,7 @@ from utils.db_utils import get_undefined_category_items, update_category_in_db
 from utils.palm_predict_category_prompt import predict_category_prompt
 
 def predict_category():
-    items = get_undefined_category_items(40)
+    items = get_undefined_category_items(75)
     # print('Items:', items)
     item_count = 0
     for item in items:

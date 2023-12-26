@@ -65,3 +65,14 @@ def delete_stories(query):
     db = client['news_app']
     collection = db['english_news']
     collection.delete_many(query)
+
+def query_stories(query={}, sort=None, limit=None):
+    client = MongoClient(mongodb_conn_string)
+    db = client['news_app']
+    collection = db['english_news']
+    items = collection.find(query)
+    if sort:
+        items = items.sort(sort)
+    if limit:
+        items = items.limit(limit)
+    return items
