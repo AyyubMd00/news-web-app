@@ -11,17 +11,19 @@ app.http('GetNewsList', {
     authLeavel: 'anonymous',
     handler: async (request, context) => {
         const authorization = request.headers.get('authorization');
-        if (!authorization) {
-            return responses.sendBadRequestResponse('Missing Authorization Header!');
-        }
-        const token = authorization.split(" ")[1];
-        let userId;
-        try {
-            const credentials = jwt.verify(token, jwToken);
-            userId = credentials.user_id;
-        }
-        catch {
-            return responses.sendAuthFailedResponse('Invalid Auth Token');
+        // if (!authorization) {
+        //     return responses.sendBadRequestResponse('Missing Authorization Header!');
+        // }
+        if(authorization) {
+            const token = authorization.split(" ")[1];
+            let userId;
+            try {
+                const credentials = jwt.verify(token, jwToken);
+                userId = credentials.user_id;
+            }
+            catch {
+                return responses.sendAuthFailedResponse('Invalid Auth Token');
+            }
         }
         let category = request.query.get('category');
         let timestamp = request.query.get('timestamp');

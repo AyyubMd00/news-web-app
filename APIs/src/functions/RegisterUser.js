@@ -1,5 +1,5 @@
 const { app } = require('@azure/functions');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const { v4: uuid4 } = require('uuid');
 const validator = require('../utils/Validator');
 const UsersDao = require('../dao/usersDao.js');

@@ -1,5 +1,5 @@
 const { app } = require('@azure/functions');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const jwToken = require('../Config').get().jwt.token;
 const UsersDao = require('../dao/usersDao.js');
