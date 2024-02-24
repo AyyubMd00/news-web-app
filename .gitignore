@@ -1,3 +1,4 @@
 .vscode
 __blobstorage__
 __azurite_db*
+.env

@@ -41,17 +41,18 @@ def get_tags(title, description, content):
         ],
         "location": {
             "landmarks": [],
-            "localities": {
-                "India": "Hashim Nagar, Langer Houz",
-                "USA": "Campbell Ave, Chicago"
-            },
-            "cities": {
-                "India": "Hyderabad",
-                "USA": "Chicago"
-            },
-            "states": {
-                "USA": "IL"
-            },
+            "localities": [
+                "Hashim Nagar, Langer Houz",
+                "Campbell Ave, Chicago"
+            ],
+            "cities": [
+                "Hyderabad",
+                "Chicago"
+            ],
+            "states": [
+                "Telangana",
+                "IL"
+            ],
             "countries": [
                 "India",
                 "USA"
@@ -93,7 +94,7 @@ def get_tags(title, description, content):
         return None
     return json.loads(tags)
 
-title = "Man thrashed and sexually assaulted in Delhi; police arrest 2"
-description = "The incident took place on Diwali night when the complainant and the family of the accused were celebrating the festival."
-content  = ["A student from Hyderabad pursuing his Masters in Indiana Wesleyan University in Chicago was ambushed and robbed at gunpoint by three armed robbers on February 4.","Syed Mazahir Ali, a resident of Hashim Nagar of Langer Houz, was a few minutes away from his flat in Campbell Ave, Chicago, when three armed robbers ambushed and attacked him. They fled with his wallet and mobile.","There have been a string of violent incidents involving students from India over the past few weeks. In a viral video shot minutes after the attack, which is being circulated on social media, Mr. Ali can be heard mentioning how they jumped on him and that he is scared","Speaking to The Hindu, his wife, Syeda Ruquiya Fatima Razvi, said that Mr. Ali went to the U.S. .about six months ago for a two years Masters course in Information & Technology from Indiana Wesleyan University. “My husband sustained injuries on the back of his head, back and knees. He is admitted at a private hospital and is in a state of shock. His video doing rounds on social media is traumatising for us to watch,” she said.","Ms. Rizwi has written to the Minister for External Affairs S. Jaishankar requesting help in getting the best medical treatment."]
-pprint(get_tags(title, description, content))
+# title = "Man thrashed and sexually assaulted in Delhi; police arrest 2"
+# description = "The incident took place on Diwali night when the complainant and the family of the accused were celebrating the festival."
+# content  = ["A student from Hyderabad pursuing his Masters in Indiana Wesleyan University in Chicago was ambushed and robbed at gunpoint by three armed robbers on February 4.","Syed Mazahir Ali, a resident of Hashim Nagar of Langer Houz, was a few minutes away from his flat in Campbell Ave, Chicago, when three armed robbers ambushed and attacked him. They fled with his wallet and mobile.","There have been a string of violent incidents involving students from India over the past few weeks. In a viral video shot minutes after the attack, which is being circulated on social media, Mr. Ali can be heard mentioning how they jumped on him and that he is scared","Speaking to The Hindu, his wife, Syeda Ruquiya Fatima Razvi, said that Mr. Ali went to the U.S. .about six months ago for a two years Masters course in Information & Technology from Indiana Wesleyan University. “My husband sustained injuries on the back of his head, back and knees. He is admitted at a private hospital and is in a state of shock. His video doing rounds on social media is traumatising for us to watch,” she said.","Ms. Rizwi has written to the Minister for External Affairs S. Jaishankar requesting help in getting the best medical treatment."]
+# pprint(get_tags(title, description, content))
