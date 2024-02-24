@@ -19,21 +19,32 @@ def upload_stories_in_db(stories):
     collection.insert_many(stories)
     client.close()
 
-def get_undefined_category_items(limit):
+def get_undefined_category_or_tag_items(limit):
     client = MongoClient(mongodb_conn_string)
     db = client['news_app']
     collection = db['english_news']
-    query = {'category': ''}
-    items = collection.find(query).sort('created_timestamp', -1).limit(limit)
+    query = {
+            'or': [
+                {'category': ''},
+                {'tags': {}}
+            ]
+        }
+    project = {
+        '_id': 1,
+        'title': 1,
+        'description': 1,
+        'content': 1
+    }
+    items = collection.find(query, project).sort('created_timestamp', -1).limit(limit)
     return items
 
-def get_wrong_category_items(limit):
-    client = MongoClient(mongodb_conn_string)
-    db = client['news_app']
-    collection = db['english_news']
-    query = {'created_timestamp': {'$lt': '2023-11-23T00:00:00.000Z'}}
-    items = collection.find(query).sort('created_timestamp', -1).limit(limit)
-    return items
+# def get_wrong_category_items(limit):
+#     client = MongoClient(mongodb_conn_string)
+#     db = client['news_app']
+#     collection = db['english_news']
+#     query = {'created_timestamp': {'$lt': '2023-11-23T00:00:00.000Z'}}
+#     items = collection.find(query).sort('created_timestamp', -1).limit(limit)
+#     return items
 
 # def get_count_of_undefined_category():
 #     client = MongoClient(mongodb_conn_string)
@@ -44,11 +55,11 @@ def get_wrong_category_items(limit):
 #     return count
 
 
-def update_category_in_db(item, category):
+def update_category_and_tags_in_db(item, category, tags):
     client = MongoClient(mongodb_conn_string)
     db = client['news_app']
     collection = db['english_news']
-    update = {"$set": {"category": category, "category_predicted": True}}
+    update = {"$set": {"category": category, "category_predicted": True, "tags": tags, "tags_predicted": True}}
     collection.update_one({"_id": item["_id"]}, update)
 
 def is_story_present_in_db(link):

@@ -1,12 +1,18 @@
-import google.generativeai as palm
+import google.generativeai as genai
+from dotenv import load_dotenv
 import os
 
-palm_api_key = os.environ.get("palm_api_key")
-palm.configure(api_key=palm_api_key)
+load_dotenv()
+genai_api_key = os.environ.get("genai_api_key")
 
-# print(list(palm.list_models()))
+genai.configure(api_key=genai_api_key)
+
+for m in genai.list_models():
+  if 'generateText' in m.supported_generation_methods:
+    print(m.name)
+
 def predict_category_prompt(title, description):
-    models = [m for m in palm.list_models() if 'generateText' in m.supported_generation_methods]
+    models = [m for m in genai.list_models() if 'generateText' in m.supported_generation_methods]
     model = models[0].name
 
     prompt = f'''Categories: Technology, Environment, Entertainment, Politics, Education, Crime, Sports, Business, Travel, Money and Nation.
@@ -14,37 +20,38 @@ def predict_category_prompt(title, description):
     Title: {title}
     Description: {description}
     Response should contain only one word ie, <category>.
+    Example Response: Technology
     None is not an option.
     Note: Anything that involves government bodies and similar news belongs to nation.'''
 
     safety_settings=[
         {
-            "category": palm.types.HarmCategory.HARM_CATEGORY_DEROGATORY,
-            "threshold": palm.types.HarmBlockThreshold.BLOCK_NONE,
+            "category": genai.types.HarmCategory.HARM_CATEGORY_DEROGATORY,
+            "threshold": genai.types.HarmBlockThreshold.BLOCK_NONE,
         },
         {
-            "category": palm.types.HarmCategory.HARM_CATEGORY_TOXICITY,
-            "threshold": palm.types.HarmBlockThreshold.BLOCK_NONE,
+            "category": genai.types.HarmCategory.HARM_CATEGORY_TOXICITY,
+            "threshold": genai.types.HarmBlockThreshold.BLOCK_NONE,
         },        
         {
-            "category": palm.types.HarmCategory.HARM_CATEGORY_VIOLENCE,
-            "threshold": palm.types.HarmBlockThreshold.BLOCK_NONE,
+            "category": genai.types.HarmCategory.HARM_CATEGORY_VIOLENCE,
+            "threshold": genai.types.HarmBlockThreshold.BLOCK_NONE,
         },        
         {
-            "category": palm.types.HarmCategory.HARM_CATEGORY_SEXUAL,
-            "threshold": palm.types.HarmBlockThreshold.BLOCK_NONE,
+            "category": genai.types.HarmCategory.HARM_CATEGORY_SEXUAL,
+            "threshold": genai.types.HarmBlockThreshold.BLOCK_NONE,
         },        
         {
-            "category": palm.types.HarmCategory.HARM_CATEGORY_MEDICAL,
-            "threshold": palm.types.HarmBlockThreshold.BLOCK_NONE,
+            "category": genai.types.HarmCategory.HARM_CATEGORY_MEDICAL,
+            "threshold": genai.types.HarmBlockThreshold.BLOCK_NONE,
         },        
         {
-            "category": palm.types.HarmCategory.HARM_CATEGORY_DANGEROUS,
-            "threshold": palm.types.HarmBlockThreshold.BLOCK_NONE,
+            "category": genai.types.HarmCategory.HARM_CATEGORY_DANGEROUS,
+            "threshold": genai.types.HarmBlockThreshold.BLOCK_NONE,
         },
     ]
 
-    completion = palm.generate_text(
+    completion = genai.generate_text(
         model=model,
         prompt=prompt,
         temperature=0.99,
@@ -54,6 +61,6 @@ def predict_category_prompt(title, description):
     category = completion.result or None
     return category
 
-# title = "Man thrashed and sexually assaulted in Delhi; police arrest 2"
-# description = "The incident took place on Diwali night when the complainant and the family of the accused were celebrating the festival."
-# print(predict_category_prompt(title, description))
+title = "Man thrashed and sexually assaulted in Delhi; police arrest 2"
+description = "The incident took place on Diwali night when the complainant and the family of the accused were celebrating the festival."
+print(predict_category_prompt(title, description))

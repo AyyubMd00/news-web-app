@@ -4,7 +4,7 @@ import requests
 
 from web_scraping.th_get_news import get_news as th_get_news
 from web_scraping.ie_get_news import get_news as ie_get_news
-from utils.predict_category import predict_category
+from ETL.Functions.utils.get_category_and_tags import get_category_and_tags
 
 app = func.FunctionApp()
 # predict_category_func_url = "https://func-news-app-process-news.azurewebsites.net/api/PredictCategory"
@@ -51,5 +51,5 @@ def FetchNewsIE(myTimer: func.TimerRequest) -> None:
 def PredictCategory(myTimer: func.TimerRequest) -> None:
     if myTimer.past_due:
         logging.info('The timer is past due!')
-    predict_category()
+    get_category_and_tags()
     logging.info('PredictCategory function executed.')
