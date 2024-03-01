@@ -1,4 +1,4 @@
-from pprint import pprint
+# from pprint import pprint
 
 from utils.db_utils import get_undefined_category_or_tag_items, update_category_and_tags_in_db
 from utils.gemini_ai_predict_category_prompt import predict_category_prompt

@@ -10,4 +10,4 @@ BeautifulSoup4
 # bardapi
 google-generativeai
 langid
-dotenv
+# dotenv
