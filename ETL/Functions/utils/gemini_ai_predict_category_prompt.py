@@ -1,9 +1,7 @@
 import google.generativeai as genai
 from google.generativeai.types import HarmCategory, HarmBlockThreshold
-from dotenv import load_dotenv
 import os
 
-load_dotenv()
 genai_api_key = os.environ.get("genai_api_key")
 
 genai.configure(api_key=genai_api_key)

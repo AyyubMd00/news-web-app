@@ -19,17 +19,6 @@
 			}
 		},
 		{
-			"type": "func",
-			"label": "func: host start",
-			"command": "host start",
-			"problemMatcher": "$func-node-watch",
-			"isBackground": true,
-			"dependsOn": "npm install (functions)",
-			"options": {
-				"cwd": "${workspaceFolder}/APIs"
-			}
-		},
-		{
 			"type": "shell",
 			"label": "npm install (functions)",
 			"command": "npm install",
@@ -44,6 +33,17 @@
 			"problemMatcher": [],
 			"options": {
 				"cwd": "${workspaceFolder}/APIs"
+			}
+		},
+		{
+			"type": "func",
+			"label": "func: host start",
+			"command": "host start",
+			"problemMatcher": "$func-node-watch",
+			"isBackground": true,
+			"dependsOn": "npm install (functions)",
+			"options": {
+				"cwd": "${workspaceFolder}/APIs\\Node APIs"
 			}
 		}
 	]

@@ -8,7 +8,7 @@ const config = {
     }
 };
 
-console.log(config)
+// console.log(config)
 
 exports.get = function() {
     return config;

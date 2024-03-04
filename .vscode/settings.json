@@ -1,5 +1,5 @@
 {
-    "azureFunctions.deploySubpath": "APIs",
+    "azureFunctions.deploySubpath": "APIs\\Node APIs",
     "azureFunctions.scmDoBuildDuringDeployment": true,
     "azureFunctions.pythonVenv": ".venv",
     "azureFunctions.projectLanguage": "JavaScript",
@@ -7,5 +7,6 @@
     "debug.internalConsoleOptions": "neverOpen",
     "azureFunctions.projectLanguageModel": 4,
     "azureFunctions.postDeployTask": "npm install (functions)",
-    "azureFunctions.preDeployTask": "npm prune (functions)"
+    "azureFunctions.preDeployTask": "npm prune (functions)",
+    "azureFunctions.projectSubpath": "APIs\\Node APIs"
 }

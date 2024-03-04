@@ -5,6 +5,7 @@ const newsDao = new NewsDao();
 const Responses = require('../utils/Responses');
 const responses = new Responses();
 const jwToken = require('../Config').get().jwt.token;
+const axios = require('axios');
 
 app.http('GetNewsDetail', {
     methods: ['GET'],
@@ -14,9 +15,9 @@ app.http('GetNewsDetail', {
         // if (!authorization) {
         //     return responses.sendBadRequestResponse('Missing Authorization Header!');
         // }
+        let userId;
         if(authorization) {
             const token = authorization.split(" ")[1];
-            let userId;
             try {
                 const credentials = jwt.verify(token, jwToken);
                 userId = credentials.user_id;
@@ -26,13 +27,30 @@ app.http('GetNewsDetail', {
             }
         }
         
-        let article_id = request.query.get('article_id');
-        if (!article_id) {
+        let articleId = request.query.get('article_id');
+        if (!articleId) {
             return responses.sendBadRequestResponse('No article id is given!');
         }
-        let article = await newsDao.getNewsDetail(article_id);
+        let article = await newsDao.getNewsDetail(articleId);
         if (!article) {
             return responses.sendBadRequestResponse('Incorrect article id is given!');
+        }
+        if (article.tags == []) {
+            article.tags == {}
+        }
+        // context.log(userId);
+        if (authorization) {
+            let userHistory = {
+                user_id: userId,    
+                article_id: articleId,
+                tags: article.tags,
+                timestamp: new Date().toISOString()
+            };
+            let kafkaAPIRes = await axios.post('https://func-news-app.azurewebsites.net/api/kafkaproducer', userHistory);
+            if (kafkaAPIRes.status != 200) {
+                await axios.post('https://func-news-app.azurewebsites.net/api/kafkaproducer', userHistory);
+            }
+            // context.log(kafkaAPIRes.status);
         }
         let response = {
             message: 'News article is fetched',

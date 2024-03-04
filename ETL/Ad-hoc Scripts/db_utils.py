@@ -26,8 +26,7 @@ def get_undefined_category_or_tag_items(limit):
     query = {
             'or': [
                 {'category': ''},
-                {'tags': {}},
-                {'tags': []}
+                {'tags': {}}
             ]
         }
     project = {
@@ -50,7 +49,7 @@ def get_undefined_category_or_tag_items(limit):
 # def get_count_of_undefined_category():
 #     client = MongoClient(mongodb_conn_string)
 #     db = client['news_app']
-#     collection = db['english_news']
+#     collection = db['english_news']``
 #     query = {'category': ''}
 #     count = collection.count_documents(query)
 #     return count

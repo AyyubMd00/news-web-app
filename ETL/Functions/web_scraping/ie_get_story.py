@@ -21,7 +21,7 @@ def get_story(url, title):
         "link": url,
         "country": "India",
         "language": "english",
-        "created_timestamp": (datetime.utcnow() + timedelta(hours=5, minutes=30)).strftime("%Y-%m-%dT%H:%M:%S.%fZ") #using utcnow instead now is because the azure function apps is set to utc timezone.
+        "created_timestamp": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ") #using utcnow instead now is because the azure function apps is set to utc timezone.
     }
 
     title_element = soup.find(class_='heading-part')
@@ -92,5 +92,5 @@ def get_story(url, title):
                 continue
             story['tags'].append(tag_element.get_text().strip())
     else:
-        story['tags'] = []
+        story['tags'] = {}
     return story

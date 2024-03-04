@@ -2,8 +2,10 @@ import google.generativeai as genai
 from google.generativeai.types import HarmCategory, HarmBlockThreshold
 import os
 import json
+from dotenv import load_dotenv
 # from pprint import pprint
 
+load_dotenv()
 genai_api_key = os.environ.get("genai_api_key")
 genai.configure(api_key=genai_api_key)
 
@@ -23,7 +25,7 @@ def get_tags(title, description, content):
     
     Classify the location tags into landmarks, localities, cities, states, countries.
     
-    Response should be in JSON format. No Explanation needed. And no text should be present outside the json object.''' + '''
+    Response should be in JSON format. No Explanation needed. And no text should be present outside the json object. Reponse should not start with anything else other than the JSON object itself.''' + '''
     Sample question:
     title: Student from Hyderabad ambushed and robbed at gunpoint in Chicago
     description: Syed Mazahir Ali, a resident of Hashim Nagar of Langer Houz, was a few minutes away from his flat in Campbell Ave, Chicago, when three armed robbers ambushed and attacked him

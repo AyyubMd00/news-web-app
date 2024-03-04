@@ -13,6 +13,8 @@ def get_category_and_tags():
         # print(item['title'], item['description'], sep='\n')
         category = predict_category_prompt(item['title'], item['description'])
         tags = get_tags(item['title'], item['description'], item['content'])
+        if not tags:
+            tags = {}
         # print(item_count, '. ', category, sep='')
         if category:
             update_category_and_tags_in_db(item, category, tags)
