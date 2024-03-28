@@ -32,7 +32,7 @@ def get_news():
         # print("Story: ", story)
         if story != {}:
             # story['category'] = get_category(story['title'], story['description'])
-            story['category'] = ''
+            # story['category'] = ''
             stories.append(story)
     if len(stories):
         upload_stories_in_db(stories)

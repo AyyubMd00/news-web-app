@@ -11,12 +11,18 @@ def get_category_and_tags():
     for item in items:
         item_count += 1
         # print(item['title'], item['description'], sep='\n')
-        category = predict_category_prompt(item['title'], item['description'])
-        tags = get_tags(item['title'], item['description'], item['content'])
-        if not tags:
+        category = item['category']
+        if category == "":
+            category = predict_category_prompt(item['title'], item['description'])
+        tags = item['tags']
+        if tags == {} or tags == []:
+            tags = get_tags(item['title'], item['description'], item['content'])
+            # print(type(tags))
+        if not isinstance(category, str):
+            category = ""
+        if not isinstance(tags, dict):
             tags = {}
-        # print(item_count, '. ', category, sep='')
-        if category:
+        if tags != {} or category != "":
             update_category_and_tags_in_db(item, category, tags)
-
-# predict_category()
+        print(item_count)
+get_category_and_tags()

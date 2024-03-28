@@ -39,7 +39,7 @@ def get_news():
             # print(story)
             if story != {}:
                 # story['category'] = get_category(story['title'], story['description'])
-                story['category'] = ''
+                # story['category'] = ''
                 stories.append(story)
     print(len(stories))
     if len(stories):

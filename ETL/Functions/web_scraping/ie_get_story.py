@@ -21,7 +21,9 @@ def get_story(url, title):
         "link": url,
         "country": "India",
         "language": "english",
-        "created_timestamp": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ") #using utcnow instead now is because the azure function apps is set to utc timezone.
+        "created_timestamp": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ"), #using utcnow instead now is because the azure function apps is set to utc timezone.
+        "category": "",
+        "tags": {}
     }
 
     title_element = soup.find(class_='heading-part')
@@ -84,13 +86,13 @@ def get_story(url, title):
     else:
         print("Published Timestamp Missing")
         return {}
-    tags_element = soup.find(class_='storytags')
-    if tags_element != None: # If tag is missing
-        story['tags'] = []
-        for tag_element in tags_element.find('li'):
-            if 'tags' in tag_element.text.lower():
-                continue
-            story['tags'].append(tag_element.get_text().strip())
-    else:
-        story['tags'] = {}
+    # tags_element = soup.find(class_='storytags')
+    # if tags_element != None: # If tag is missing
+    #     story['tags'] = []
+    #     for tag_element in tags_element.find('li'):
+    #         if 'tags' in tag_element.text.lower():
+    #             continue
+    #         story['tags'].append(tag_element.get_text().strip())
+    # else:
+    #     story['tags'] = {}
     return story

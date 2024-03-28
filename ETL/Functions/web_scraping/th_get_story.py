@@ -19,6 +19,7 @@ def get_story(url, title):
         "link": url,
         "language": "english",
         "video_url": "",
+        "category": "",
         "tags": {},
         "created_timestamp": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ") #using utcnow instead now is because the azure function apps is set to utc timezone.
     }

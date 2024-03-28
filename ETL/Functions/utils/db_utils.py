@@ -2,6 +2,7 @@ from pymongo import MongoClient
 import os
 
 mongodb_conn_string = os.environ.get("mongodb_conn_string")
+mongodb_conn_string = "mongodb+srv://AyyubMd00:ayyUB2000@cluster0.mozxcn1.mongodb.net/"
 def upload_story_in_db(story):
     client = MongoClient(mongodb_conn_string)
     db = client['news_app']
@@ -24,7 +25,7 @@ def get_undefined_category_or_tag_items(limit):
     db = client['news_app']
     collection = db['english_news']
     query = {
-            'or': [
+            '$or': [
                 {'category': ''},
                 {'tags': {}},
                 {'tags': []}
@@ -34,7 +35,9 @@ def get_undefined_category_or_tag_items(limit):
         '_id': 1,
         'title': 1,
         'description': 1,
-        'content': 1
+        'content': 1,
+        'category': 1,
+        'tags': 1
     }
     items = collection.find(query, project).sort('created_timestamp', -1).limit(limit)
     return items
