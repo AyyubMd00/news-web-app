@@ -5,7 +5,6 @@ import json
 from pprint import pprint
 
 genai_api_key = os.environ.get("genai_api_key")
-genai_api_key = "AIzaSyCkH1kMBD13rpwWwS2VUfcXAIa_uPsfqVo"
 genai.configure(api_key=genai_api_key)
 
 # for m in genai.list_models():

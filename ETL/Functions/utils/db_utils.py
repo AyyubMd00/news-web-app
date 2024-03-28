@@ -2,7 +2,6 @@ from pymongo import MongoClient
 import os
 
 mongodb_conn_string = os.environ.get("mongodb_conn_string")
-mongodb_conn_string = "mongodb+srv://AyyubMd00:ayyUB2000@cluster0.mozxcn1.mongodb.net/"
 def upload_story_in_db(story):
     client = MongoClient(mongodb_conn_string)
     db = client['news_app']

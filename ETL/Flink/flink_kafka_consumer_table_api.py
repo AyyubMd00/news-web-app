@@ -1,7 +1,8 @@
 from pyflink.table import TableEnvironment, EnvironmentSettings
+# from pyflink.common import Configuration
 from dotenv import load_dotenv
 import os
-import json
+# import json
 
 # json_schema = JsonRowDeserializationSchema.builder().build()
 print('running...')
@@ -9,6 +10,7 @@ load_dotenv()
 
 cloudkarafka_username = os.environ.get("cloudkarafka_username")
 cloudkarafka_password = os.environ.get("cloudkarafka_password")
+# account_key = os.environ.get("stg_account_key")
 
 t_env = TableEnvironment.create(EnvironmentSettings.in_streaming_mode())
 
@@ -20,12 +22,22 @@ t_env = TableEnvironment.create(EnvironmentSettings.in_streaming_mode())
 #             mechanism="SCRAM-SHA-512";
 #     }
 # """
+# t_env.execute_sql(
+#     '''
+#     CREATE CATALOG MyCatalog WITH (
+#         'type' = 'generic_in_memory',
+#         'default-database' = 'my_database'
+#     );
+#     '''
+# )
+
+# t_env.execute_sql("USE CATALOG MyCatalog;")
 
 kafka_query = f'''
     create table kafka_source1(
         user_id STRING,
         article_id STRING,
-        tags ARRAY<STRING>,
+        tags ROW<people ARRAY<STRING>, location ROW<landmarks ARRAY<STRING>, localities ARRAY<STRING>, cities ARRAY<STRING>, states ARRAY<STRING>, countries ARRAY<STRING>>, other ARRAY<STRING>>,
         `timestamp` STRING
     )
     with (
@@ -43,23 +55,26 @@ kafka_query = f'''
 print(kafka_query)
 t_env.execute_sql(kafka_query)
 
-# t_env.execute_sql(
-#     f'''
-#     create table sink(
-#         category VARCHAR,
-#         cnt BIGINT
-#     )
-#     with (
-    
-#         'connector' = 'filesystem',
-#         'format' = 'csv',
-#         'path' = '{output_path}'
-#     )
-#     '''
-# )
+t_env.execute_sql(
+    '''
+    create table mongodb_sink (
+        user_id STRING,
+        article_id STRING,
+        tags ROW<people ARRAY<STRING>, location ROW<landmarks ARRAY<STRING>, localities ARRAY<STRING>, cities ARRAY<STRING>, states ARRAY<STRING>, countries ARRAY<STRING>>, other ARRAY<STRING>>,
+        `timestamp` STRING
+    )
+    with (
+        'connector' = 'mongodb',
+        'uri' = 'mongodb+srv://AyyubMd00:ayyUB2000@cluster0.mozxcn1.mongodb.net/',
+        'database' = 'news_app',
+        'collection' = 'user_history'
+    )
+    '''
+)
 
 t_env.execute_sql(
     '''
+    insert into mongodb_sink
     select * from kafka_source1
     '''
-).print()
+).wait()
