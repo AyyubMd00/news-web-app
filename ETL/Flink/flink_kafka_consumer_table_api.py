@@ -10,6 +10,7 @@ load_dotenv()
 
 cloudkarafka_username = os.environ.get("cloudkarafka_username")
 cloudkarafka_password = os.environ.get("cloudkarafka_password")
+mongodb_conn_string = os.environ.get("mongodb_conn_string")
 # account_key = os.environ.get("stg_account_key")
 
 t_env = TableEnvironment.create(EnvironmentSettings.in_streaming_mode())
@@ -43,7 +44,7 @@ kafka_query = f'''
     with (
         'connector' = 'kafka',
         'topic' = 'cdzbgqqu-user-history',
-        'properties.bootstrap.servers' = 'dory.srvs.cloudkafka.com:9094',
+        'properties.bootstrap.servers' = '',
         'properties.group.id' = 'cdzbgqqu-flink-consumer',
         'scan.startup.mode' = 'earliest-offset',
         'format' = 'json',
@@ -55,8 +56,7 @@ kafka_query = f'''
 print(kafka_query)
 t_env.execute_sql(kafka_query)
 
-t_env.execute_sql(
-    '''
+mongodb_query =     f'''
     create table mongodb_sink (
         user_id STRING,
         article_id STRING,
@@ -65,12 +65,14 @@ t_env.execute_sql(
     )
     with (
         'connector' = 'mongodb',
-        'uri' = 'mongodb+srv://AyyubMd00:ayyUB2000@cluster0.mozxcn1.mongodb.net/',
+        'uri' = '{mongodb_conn_string}',
         'database' = 'news_app',
         'collection' = 'user_history'
     )
     '''
-)
+print(mongodb_query)
+
+t_env.execute_sql(mongodb_query)
 
 t_env.execute_sql(
     '''
