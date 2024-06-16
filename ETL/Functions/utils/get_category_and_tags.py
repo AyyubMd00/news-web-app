@@ -25,4 +25,4 @@ def get_category_and_tags():
         if tags != {} or category != "":
             update_category_and_tags_in_db(item, category, tags)
         print(item_count)
-get_category_and_tags()
+# get_category_and_tags()

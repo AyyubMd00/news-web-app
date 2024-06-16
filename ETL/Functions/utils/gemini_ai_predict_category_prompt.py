@@ -41,7 +41,10 @@ def predict_category_prompt(title, description):
         stop_sequences=['x'],
         max_output_tokens=5,
         temperature=0.2))
-    category = response.text or None
+    try:
+        category = response.text
+    except:
+        category = None
     return category
 
 # title = "Man thrashed and sexually assaulted in Delhi; police arrest 2"
