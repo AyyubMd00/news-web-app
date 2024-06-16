@@ -42,7 +42,7 @@ services:
   # Access the cli by running:
   # > docker-compose exec ksqldb-cli  ksql http://primary-ksqldb-server:8088
   ksqldb-cli:
-    image: ${KSQL_IMAGE_BASE}confluentinc/ksqldb-cli:${KSQL_VERSION}
+    image: confluentinc/ksqldb-cli:latest
     container_name: ksqldb-cli
     depends_on:
       - primary-ksqldb-server

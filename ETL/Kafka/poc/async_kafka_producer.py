@@ -6,16 +6,16 @@ import json
 
 
 config = {
-    'bootstrap_servers': 'dory.srvs.cloudkafka.com:9094',
+    'bootstrap_servers': 'sensible-condor-6169-us1-kafka.upstash.io:9092',
     'client_id': 'article-id-producer-test',
     'security_protocol': 'SASL_SSL',
     'ssl_context': ssl.create_default_context(),
-    'sasl_mechanism': 'SCRAM-SHA-512',
-    'sasl_plain_username': 'cdzbgqqu',
-    'sasl_plain_password': 'qmXtLjGWUsnREpCyCT5ab2wk3r3dfQg6',
+    'sasl_mechanism': 'SCRAM-SHA-256',
+    'sasl_plain_username': 'c2Vuc2libGUtY29uZG9yLTYxNjkkk7pGlgDhRMdhHrsQ81BiL_NuHfsax3o0buA',
+    'sasl_plain_password': 'ZDdiMjExOWYtNmFjZC00NjQzLWE5YzMtZWU4MzY4MTcwNzM0',
 }
 
-topic = 'cdzbgqqu-test'
+topic = 'test'
 
 message = {
     'user_id': 'db363fb5-fa2b-4ab4-86d2-09de77a3bb89',
@@ -34,4 +34,4 @@ async def send_msg(message):
     finally:
         await producer.stop()
 
-# asyncio.run(send_msg())
+asyncio.run(send_msg(message))
