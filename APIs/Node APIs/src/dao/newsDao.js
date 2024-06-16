@@ -21,6 +21,7 @@ class NewsDao {
             _id: 0,
             article_id: 1,
             title: 1,
+            description: 1,
             source_id: 1,
             image_url: 1,
             published_timestamp: 1,

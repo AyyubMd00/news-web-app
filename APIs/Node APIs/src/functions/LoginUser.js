@@ -29,7 +29,7 @@ app.http('LoginUser', {
             return responses.sendBadRequestResponse('Incorrect Email or Password!');
         }
         const token = jwt.sign(user, jwToken, {
-            expiresIn: '24h'
+            // expiresIn: '24h'
         });
         let response = {
             message: 'Login successful',

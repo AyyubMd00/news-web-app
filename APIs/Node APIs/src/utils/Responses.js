@@ -28,6 +28,9 @@ module.exports = class {
 
     async sendSuccessResponse(json) {
         return {
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            },
             status: 200,
             jsonBody: json
         };
