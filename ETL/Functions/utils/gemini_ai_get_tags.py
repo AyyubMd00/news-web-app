@@ -21,7 +21,8 @@ def get_tags(title, description, content):
     
     List the relevant tags by classifying them into people based tags, location or landmark based tags and other generic tags.
     
-    Classify the location tags into landmarks, localities, cities, states, countries.
+    Classify the location tags into landmarks, localities, cities, states, countries. If city is available, put the corresonding state and country also. For eg., if city Pune is added to the tags, then add Maharashtra as state and India as country.
+    Make tags in standard wordings so as to maintain the consistency across different articles.
     
     Response should be in JSON format. No Explanation needed. And no text should be present outside the json object.''' + '''
     Sample question:
@@ -49,7 +50,7 @@ def get_tags(title, description, content):
             ],
             "states": [
                 "Telangana",
-                "IL"
+                "Illinois"
             ],
             "countries": [
                 "India",
