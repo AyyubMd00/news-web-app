@@ -1,5 +1,6 @@
 const MongoHandler = require('../MongoHandler.js');
 const mongoHandler = new MongoHandler();
+const timestampUtils = require('../utils/timestampUtils.js')
 
 class NewsDao {
     // connecting to 'english_news' collection in mongo DB
@@ -14,7 +15,7 @@ class NewsDao {
         if (timestamp) {
             query.published_timestamp = {'$lt': timestamp};
         }
-        if (category) {
+        if (category & category != 'All') {
             query.category = category;
         }
         const project = {
@@ -31,6 +32,9 @@ class NewsDao {
             published_timestamp: -1
         };
         const documents = await this.collection.find(query).project(project).sort(sort).limit(pageSize).toArray();
+        for(let i=0; i<documents.length; i++) {
+            documents[i].published_timestamp = timestampUtils.convertISOTimestamptoLocalString(documents[i].published_timestamp);            
+        }
         await mongoHandler.closeConnection();
         return documents;
     };
@@ -59,8 +63,14 @@ class NewsDao {
                 content: 1
             }
         };
+        
         const document = await this.collection.findOne(query, options);
+
+        document.published_timestamp = timestampUtils.convertISOTimestamptoLocalString(document.published_timestamp);
+        document.content = document.content.join('\n');
+
         await mongoHandler.closeConnection();
+        
         return document;
     }
 };

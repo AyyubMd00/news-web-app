@@ -5,8 +5,8 @@ const NewsDao = require('../dao/newsDao');
 const newsDao = new NewsDao();
 const Responses = require('../utils/Responses');
 const responses = new Responses();
-const KafkaProducer = require('../utils/kafkaProducer');
-const kafkaProducer = new KafkaProducer();
+// const KafkaProducer = require('../utils/kafkaProducer');
+// const kafkaProducer = new KafkaProducer();
 const jwToken = require('../Config').get().jwt.token;
 // const axios = require('axios');
 
