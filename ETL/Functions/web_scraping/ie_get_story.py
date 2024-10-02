@@ -60,7 +60,8 @@ def get_story(url, title):
 
 
     content_element = soup.find(class_='full-details')
-    image_element = content_element.find('img')
+    caption_element = content_element.find(class_='custom-caption')
+    image_element = caption_element.find('img')
     if image_element != None: # If image is missing
         story['image_url'] = image_element.get('src')
     else:

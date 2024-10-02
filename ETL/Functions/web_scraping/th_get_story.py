@@ -40,7 +40,7 @@ def get_story(url, title):
         story['image_url'] = picture_source_element.get('srcset') # if picture_source_element is None, it will throw error here.
     except:
         story['image_url'] = ""
-    time_city_details = article_element.find(class_= 'publish-time').get_text().strip()
+    time_city_details = article_element.find(class_= 'update-publish-time').get_text().strip()
     published_time = time_city_details[:time_city_details.find('|')-1]
     # updated_time = published_time[:-8] + time_city_details[time_city_details.rfind('Updated ')+8:time_city_details.find(' -')-3]
     # print(published_time, updated_time)
