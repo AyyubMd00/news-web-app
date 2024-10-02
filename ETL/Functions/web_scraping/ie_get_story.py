@@ -75,6 +75,8 @@ def get_story(url, title):
             # print(para_element.text, count)
             count += 1
         # story['content'] = story['content'][:-2] #This line was used when content was of type string to remove last '\n'.
+        if 'Click here' in story['content'][-1]:
+            story['content'] = story['content'][:-1]
     else:
         print("Content Missing")
         return {}
