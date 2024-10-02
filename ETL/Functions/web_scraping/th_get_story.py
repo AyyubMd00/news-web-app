@@ -41,14 +41,14 @@ def get_story(url, title):
     except:
         story['image_url'] = ""
     time_city_details = article_element.find(class_= 'update-publish-time').get_text().strip()
-    published_time = time_city_details[:time_city_details.find('|')-1]
+    published_time = time_city_details[time_city_details.find('-')+2:time_city_details.rfind('-')-1]
     # updated_time = published_time[:-8] + time_city_details[time_city_details.rfind('Updated ')+8:time_city_details.find(' -')-3]
     # print(published_time, updated_time)
     story['published_timestamp'] = get_iso_datetime(published_time.strip(), "%B %d, %Y %I:%M %p")
     # story['updated_timestamp'] = get_iso_datetime(updated_time.strip(), "%B %d, %Y %I:%M %p")
     city_name = ""
     if time_city_details.find('-')>-1:
-        city_name = time_city_details[time_city_details.find('-')+2:]
+        city_name = time_city_details[time_city_details.rfind('-')+2:]
     story['city_name'] = city_name
     # print(story['city_name'])
     if city_name.find(',')>-1: # If country also is included in the time city details
