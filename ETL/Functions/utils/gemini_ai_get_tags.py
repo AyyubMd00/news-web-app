@@ -89,7 +89,7 @@ def get_tags(title, description, content):
         temperature=0.2))
     try:
         tags = response.text
-    except ValueError:
+    except:
         return {}
     if tags[0] == '`':
         tags = tags[tags.find('\n'):tags.rfind('\n')]
