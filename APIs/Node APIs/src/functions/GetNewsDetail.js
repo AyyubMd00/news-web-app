@@ -8,7 +8,7 @@ const responses = new Responses();
 // const KafkaProducer = require('../utils/kafkaProducer');
 // const kafkaProducer = new KafkaProducer();
 const jwToken = require('../Config').get().jwt.token;
-// const axios = require('axios');
+const axios = require('axios');
 
 app.http('GetNewsDetail', {
     methods: ['GET'],
@@ -49,13 +49,13 @@ app.http('GetNewsDetail', {
                 tags: article.tags,
                 timestamp: new Date().toISOString()
             };
-            kafkaProducer.publish(JSON.stringify(userHistory)); //not using await because API should not wait for the message to get produced.
+            // kafkaProducer.publish(JSON.stringify(userHistory)); //not using await because API should not wait for the message to get produced.
             // Caling python API
-            // let kafkaAPIRes = await axios.post('https://func-news-app.azurewebsites.net/api/kafkaproducer', userHistory);
-            // if (kafkaAPIRes.status != 200) {
-            //     await axios.post('https://func-news-app.azurewebsites.net/api/kafkaproducer', userHistory);
-            // }
-            // context.log(kafkaAPIRes.status);
+            let kafkaAPIRes = await axios.post('https://func-news-app.azurewebsites.net/api/kafkaproducer', userHistory);
+            if (kafkaAPIRes.status != 200) {
+                await axios.post('https://func-news-app.azurewebsites.net/api/kafkaproducer', userHistory);
+            }
+            context.log(kafkaAPIRes.status);
 
 
         }
