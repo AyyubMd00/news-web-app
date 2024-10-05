@@ -15,7 +15,10 @@ class NewsDao {
         if (timestamp) {
             query.published_timestamp = {'$lt': timestamp};
         }
-        if (category & category != 'All') {
+        // if (category == 'All') {
+        //     category = null
+        // }
+        if (category && category != 'All') {
             query.category = category;
         }
         const project = {
@@ -63,11 +66,11 @@ class NewsDao {
                 content: 1
             }
         };
-        
+
         const document = await this.collection.findOne(query, options);
 
         document.published_timestamp = timestampUtils.convertISOTimestamptoLocalString(document.published_timestamp);
-        document.content = document.content.join('\n');
+        document.content = document.content.join('\n\n\t');
 
         await mongoHandler.closeConnection();
         
