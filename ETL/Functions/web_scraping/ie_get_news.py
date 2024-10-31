@@ -7,7 +7,7 @@ from utils.utils import is_english_news
 # from utils.get_category_bert import get_category
 
 def get_news():
-    response = requests.get('https://indianexpress.com/section/cities/')
+    response = requests.get('https://indianexpress.com/latest-news/')
     if response.status_code != 200:
         return
     
