@@ -81,8 +81,8 @@ def get_story(url, title):
         print("Content Missing")
         return {}
     first_publish_element = soup.find(class_='ie-first-publish')
-    published_time_element = first_publish_element.find('span')
     if published_time_element != None: # If Published Timestamp is missing
+        published_time_element = first_publish_element.find('span')
         published_time = published_time_element.get_text().strip()
         print("Published Time:", published_time)
         story['published_timestamp'] = get_iso_datetime(published_time, "%B %d, %Y %H:%M IST")
