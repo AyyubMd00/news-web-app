@@ -21,7 +21,7 @@ def get_story(url, title):
         "link": url,
         "country": "India",
         "language": "english",
-        "created_timestamp": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ"), #using utcnow instead now is because the azure function apps is set to utc timezone.
+        "created_timestamp": datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%fZ"), #using utcnow instead now is because the azure function apps is set to utc timezone.
         "category": "",
         "tags": {}
     }
@@ -41,7 +41,11 @@ def get_story(url, title):
         story['video_url'] = video_element.get('href')
     else:
         story['video_url'] = ''
-    story['description'] = title_element.find('h2').get_text().strip()
+    h2_element = title_element.find('h2')
+    if h2_element is None:
+        print("Description missing")
+        return {}
+    story['description'] = h2_element.get_text().strip()
 
     author_element = soup.find(class_='editor')
     if author_element.find('a') != None: # If author is missing

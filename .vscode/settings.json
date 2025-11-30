@@ -1,12 +1,9 @@
 {
-    "azureFunctions.deploySubpath": "APIs\\Node APIs",
+    "azureFunctions.projectSubpath": "ETL\\Functions",
+    "azureFunctions.deploySubpath": "ETL\\Functions",
     "azureFunctions.scmDoBuildDuringDeployment": true,
-    "azureFunctions.pythonVenv": ".venv",
-    "azureFunctions.projectLanguage": "JavaScript",
+    "azureFunctions.projectLanguage": "Python",
     "azureFunctions.projectRuntime": "~4",
     "debug.internalConsoleOptions": "neverOpen",
-    "azureFunctions.projectLanguageModel": 4,
-    "azureFunctions.postDeployTask": "npm install (functions)",
-    "azureFunctions.preDeployTask": "npm prune (functions)",
-    "azureFunctions.projectSubpath": "APIs\\Node APIs"
+    "azureFunctions.projectLanguageModel": 2
 }

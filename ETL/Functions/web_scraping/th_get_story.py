@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 
 from utils.utils import get_iso_datetime, get_country
 
+  
 def get_story(url, title):
     response = requests.get(url)
     if response.status_code != 200:
@@ -25,6 +26,8 @@ def get_story(url, title):
     }
 
     article_element = soup.find(class_='article-section')
+    if article_element is None:
+        return {}
     title_element = article_element.find(class_= 'title')
     if title_element == None:
         return {}

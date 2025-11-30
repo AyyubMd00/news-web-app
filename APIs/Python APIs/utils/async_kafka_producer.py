@@ -1,5 +1,5 @@
 from aiokafka import AIOKafkaProducer
-from datetime import datetime
+from datetime import datetime, UTC
 import asyncio
 import ssl
 import json
@@ -11,6 +11,11 @@ username = os.environ.get("kafkaUsername")
 mechanism = os.environ.get("kafkaSaslMechanism")
 password = os.environ.get("kafkaPassword")
 
+broker = 'pkc-56d1g.eastus.azure.confluent.cloud:9092'
+username = 'SMNHPUO67NPWHBFS'
+password = 'dPIiGHoZdITcG8ADJxEBQ5skGgH/WyGfZwlPA+9ehSAkd3V6k9n7Kddk46OPIt72'
+mechanism = 'PLAIN'
+
 
 config = {
     'bootstrap_servers': broker,
@@ -21,19 +26,17 @@ config = {
     'sasl_plain_username': username,
     'sasl_plain_password': password
 }
-print(config)
 topic = 'user-history'
 
 # message = {
 #     'user_id': 'db363fb5-fa2b-4ab4-86d2-09de77a3bb89',
 #     'article_id': 'e6705e98-ab6d-4d7b-bb92-6f91efdcc60c',
-#     'timestamp': str(datetime.utcnow().isoformat())+'Z'
+#     'timestamp': str(datetime.now(UTC))[:-6]+'Z'
 # }
 
 async def send_msg(message):
     message_json = json.dumps(message)
     message_bytes = message_json.encode()
-    print(type(message_json))
     producer = AIOKafkaProducer(**config)
     await producer.start()
     try:
